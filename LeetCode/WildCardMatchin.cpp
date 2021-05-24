@@ -19,7 +19,7 @@
                 if(s[i-1]==p[j-1] || p[j-1] =='?'){
                     dp[i][j] = dp[i-1][j-1];//dig
                 }else if(p[j-1]=='*'){
-                    dp[i][j] = dp[i-1][j] ||  dp[i][j-1];//updown
+                    dp[i][j] = dp[i-1][j] ||  dp[i][j-1];//upLeft
                 }else{
                     dp[i][j]=false;
                 }
