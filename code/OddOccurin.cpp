@@ -1,12 +1,13 @@
-//nums=[3,2,3]
-class Solution {
-public:
-    int majorityElement(vector<int>& nums) {
-        int count=0,ele=0; 
-        for(int i:nums){
-            if(count==0)ele=i;/3,2,3
-            i==ele?count++:count--;//3==3:c=1,2==2:c=0,3==3:c=1=>e=3
-        }
-        return ele;
-    }
-};
+#include<iostream>
+using namespace std;
+int main(){
+	int arr[] = {5, 7, 2, 7, 5, 2, 5};
+	int n=7;
+	int ele=0,count=0;
+	for(int i=0;i<n;i+=2){
+		if(count==0)ele=arr[i];
+		(arr[i]==ele)?count++:count--;
+	}
+	cout<<ele;
+	return 0;
+}
