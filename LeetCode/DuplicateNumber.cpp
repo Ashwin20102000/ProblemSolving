@@ -26,6 +26,25 @@ public:
     }
 };
 
+(Another Approach):
 
+// [1,3,4,2,2]
+          int slow=nums[0];
+         int fast=nums[0];
+        do
+        {
+            slow=nums[slow];        //3 , 3 
+            fast=nums[nums[fast]];  //2 , 3
+        }while(slow!=fast);//3!=2,
+    
+        slow=nums[0]; //slow = 1
+        while(slow!=fast)
+        {
+        slow=nums[slow]; //1,3,2
+        fast=nums[fast]; //2,4,2
+        }
+        return slow; // 2
+//limits are more important
+//Idea here is so simple when randomizing these elements.
 
 https://leetcode.com/problems/find-the-duplicate-number/
