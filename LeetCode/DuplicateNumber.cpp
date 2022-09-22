@@ -47,4 +47,18 @@ public:
 //limits are more important
 //Idea here is so simple when randomizing these elements.
 
+
+JS Approach 
+
+var findDuplicate = function(nums) {
+    let data = {};
+    for(let i=0;i<nums.length;i++){
+        data[nums[i]]=data[nums[i]]?data[nums[i]]:0;
+        data[nums[i]]++;
+        if(data[nums[i]]>1)return nums[i];
+    }
+    return -1;
+    
+};
+
 https://leetcode.com/problems/find-the-duplicate-number/
