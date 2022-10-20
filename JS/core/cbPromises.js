@@ -1,3 +1,6 @@
+// using Quokka.js so {} returns me a console.log 
+
+
 // Sync 
 
 // console.log('first')
@@ -202,4 +205,117 @@ console.log(shape.perimeter());
 
 // perimeter is NaN due to Arrow Fn. this has no use there
 
+
+console.log("Start");
+const promiseMe = new Promise((res)=>{
+  console.log(1);
+  res(2);
+})
+promiseMe.then(r=>{r})
+console.log('End')
+
+//Start
+// 1
+// End
+// 2
+
+//  so basically js engine take more priority to the sync code whereas async should move to
+// the sub task queue for the execution it holds some time there
+
+
+console.log("Start");
+const promiseMe1 = new Promise((res)=>{
+  console.log(1);
+  res(2);
+  console.log(3)
+})
+promiseMe1.then(r=>{r})
+console.log('End')
+
+// Start
+// 1
+// 3
+// End
+// 2
+
+//  here 3 is sync code inside the scope
+
+console.log("Start");
+
+const promiseFn =  () => new Promise(res=>{
+  console.log(1) 
+   res("Success")
+  });
+console.log('Middle');
+promiseFn().then(res=>{res});
+console.log('End');
+
+// Start
+// Middle
+// 1
+// End
+// Succes
+
+// promiseFn is fn it needs invocation so middle will be printed above
+
+
+
+// Promise Chaining
+const rejectedPromise  =  Promise.reject("Reject");
+rejectedPromise.then(res=>{res}).then(res=>{res}).catch(er=>{er}).then(_=>{
+  console.log("Success4");
+});
+
+// Reject
+// Success 4
+// Here The then after rej will always executes
+
+
+
+const promise  = (state) => new Promise((res,rej)=>state?res("Res"):rej("Rej"));
+promise(true).then(res=>{
+  {res};
+  return promise(false);
+}).catch(err=>{
+  {err};
+  return "Error Occured";
+}).then(res=>{res}).catch(er=>{er});
+
+// Res
+// Rej
+// Error Occured
+
+// first then return promise that simply rejects and next string return catch after
+// then always executed and there is rej so catch never works here
+
+
+const firstPromise = Promise.resolve("First");
+const secondPromise = Promise.resolve(firstPromise);
+secondPromise.then(res=>res).then(r=>{r});
+
+//  First
+
+
+// Convert Promise Chaining into Async/Await
+
+const loadData = (url) => {
+  return fetch(url).then(res=>(res.status===200)?res:new Error(res.status));
+}
+loadData("https://reqres.in/api/users").catch(er=>{er})
+
+// to Async Await
+
+const loadAsyncData = async(url) => {
+  try {
+    const res = await fetch(url);
+    const json = await res.json();
+    if(res.status===200){
+      return json;
+    }
+    throw new Error(res.status);
+  } catch (error) {
+    return error.message;
+  }
+}
+loadAsyncData("https://reqres.in/api/users").catch(er=>{er})
 
