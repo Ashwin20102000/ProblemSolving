@@ -319,3 +319,26 @@ const loadAsyncData = async(url) => {
 }
 loadAsyncData("https://reqres.in/api/users").catch(er=>{er})
 
+/ Promise Recursively
+
+const promise1 = Promise.resolve("Resolved1");
+const promise2 = Promise.reject("Rejected1");
+const promise3 = Promise.resolve("Resolved2");
+
+const promises = [promise1,promise2,promise3];
+
+const recurPromise = (promises) => {
+  if(promises.length===0)return;
+  const currPromise = promises.shift();
+  currPromise.then(res=>{res}).catch(rej=>{rej});
+  recurPromise(promises);
+}
+recurPromise(promises);
+
+// Resolved1
+// Rejected
+// Resolved2
+
+// By using this techniques , we able to recursively achieve the process
+
+
