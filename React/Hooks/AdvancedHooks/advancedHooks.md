@@ -96,3 +96,27 @@
  ```javascript
    const { colorMode } = useColorMode();
  ```
+ 
+ ## useId
+  + Hooks used for generation uniques Ids that can be passed as the accesability attributes
+  + Generating IDs for several related elements
+
+ ```javascript
+   const id = useId()
+ ```
+ using with elements
+ ```javascript
+    <label>
+      Password:
+      <input
+        type="password"
+        id={id}
+      />
+    </label>
+    <p id={id}>
+      There is a password
+    </p>
+
+  ```
+  Now there will be unique ids  so they won't clash each other with element (unique key)
+  
