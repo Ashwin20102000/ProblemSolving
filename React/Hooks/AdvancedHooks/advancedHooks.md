@@ -45,6 +45,10 @@
    + Skips expensive re-calculations
    ```javascript
      useMemo(calculateValue, dependencies)
+     
+      const colorMode = React.useMemo(() => ({toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      }}),[setMode]);
    ```
    
    Mostly it helps when we have to re-renders component that should not affect another function action
