@@ -69,3 +69,17 @@ const ReducePolyfil = Arr.reduce((a,b)=>a+b,0);
 {ReducePolyfil}
 
 // 15
+
+
+// Nullish Coalescing
+
+const a = 27;
+// ??
+const b = a??29;
+// before nullish coalescing
+const c = a!==undefined&&a!==null?a:29;
+{b}
+// 27
+
+{c}
+// 27
