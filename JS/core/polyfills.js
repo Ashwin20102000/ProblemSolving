@@ -83,3 +83,90 @@ const c = a!==undefined&&a!==null?a:29;
 
 {c}
 // 27
+
+
+// Async Promise Polyfill Basic
+
+function AsyncPromisePolyfill(exe){
+  let onRes,onRej;
+  function resolve(v){
+    onRes(v);
+  }
+  function reject(v){
+    onRej(v);
+  }
+  this.then = function(cb) {
+    onRes = cb;
+    return this;
+  }
+  this.catch = function(cb) {
+    onRej = cb;
+    return this;
+  }
+  exe(resolve,reject)
+}
+
+
+const promise1 = new AsyncPromisePolyfill((res,rej)=>{
+  setTimeout(()=>{
+    res(2312);
+  },1e3);
+});
+
+promise1.then(res=>{res}).catch(err=>{err});
+
+// 2312
+
+
+
+// Sync && Async Promise Polyfill
+
+function PromisePolyfill(exe){
+  let onRes,onRej,isFullfilled=false,isCalled=false,isRejected=false,value;
+  function resolve(v){
+    isFullfilled = true;
+    value=v;
+    if(typeof onRes==='function'){
+      onRes(v);
+      isCalled=true;
+    }
+  }
+  function reject(v){
+    isRejected=true;
+    value=v;
+    if(typeof onRej==="function"){
+      isCalled=true;
+      onRej(v);
+    }
+  }
+  this.then = function(cb) {
+    onRes = cb;
+    if(isFullfilled && !isCalled){
+      isCalled = true;
+      onRes(value);
+    }
+    return this;
+  }
+  this.catch = function(cb) {
+    onRej = cb;
+    if(isRejected && !isCalled){
+      isCalled=true;
+      onRej(value);
+    }
+    return this;
+  }
+  try {
+    exe(resolve,reject)
+  } catch (error) {
+    reject(error);
+  }
+}
+
+
+const promise = new PromisePolyfill((res,rej)=>{
+    rej(2312);
+});
+
+promise.then(res=>{res}).catch(err=>{err});
+
+// 2312
