@@ -60,7 +60,7 @@ Array.prototype.reduce = null;
 Array.prototype.reduce = function(cb,init){
   let reducer = init;
   for(let i=0;i<this.length;i++){
-    reducer = cb(reducer,this[i],i,this);
+    reducer =  init ? cb(reducer,this[i],i,this) : this[i];
   }
   return reducer;
 }
